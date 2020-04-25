@@ -6,110 +6,25 @@
             git_tag = sh returnStdout: true, script: 'git tag -l --points-at HEAD'
         }
 
-		stage("Bake Docker") {
-			echo 'Bake Docker'
+		stage("npm install") {
+		    sh 'npm install'
 		}
 	stage('Test'){
 	      parallel (
-		"JUnit": { 
-		    sh "echo JUnit"
+		"Unit": { 
+		    sh "echo Unit"
 		},
-		"DBUnit": { 
-		    sh "echo DBUnit"
+		"Lint": { 
+		    sh "echo Lint"
 		},
-		"Jasmine": { 
-		    sh "echo Jasmine"
+		"Component": { 
+		    sh "echo Component"
 		},
 	      )
 	    }
     
-    stage('Deploy Dev'){
-        sh "echo Dev"
+    stage('Build'){
+        sh "echo npm Build"
     }
-	stage('Browser Tests'){
-      parallel (
-        "Firefox": { 
-            sh "echo Firefox"
-        },
-        "Edge": { 
-            sh "echo Edge"
-        },
-        "Safari": { 
-            sh "echo Safari"
-        },
-        "Chrome": { 
-            sh "echo Chrome"
-        },
-      )
-    }
-    stage('Deploy Staging'){
-        sh "echo Staging"
-    }
-		stage('Browser Tests'){
-      parallel (
-        "Firefox": { 
-            sh "echo Firefox"
-        },
-        "Edge": { 
-            sh "echo Edge"
-        },
-        "Safari": { 
-            sh "echo Safari"
-        },
-        "Chrome": { 
-            sh "echo Chrome"
-        },
-      )
-    }
-	
-	stage('Deploy Perf'){
-        sh "echo Staging"
-    }
-		stage('Browser Tests'){
-      parallel (
-        "VAPT": { 
-            sh "echo VAPT"
-        },
-        "Load Tests": { 
-            sh "echo Load Tests"
-        },
-        "Stress Tests": { 
-            sh "echo Stress Tests"
-        },
-        "Spike Tests": { 
-            sh "echo Spike Tests"
-        },
-      )
-    }
-    stage('Blue Production'){
-        sh "echo Blue Production"
-    }
-		stage('Post Deployment Browser Tests'){
-      parallel (
-        "Firefox": { 
-            sh "echo Firefox"
-        },
-        "Edge": { 
-            sh "echo Edge"
-        },
-        "Safari": { 
-            sh "echo Safari"
-        },
-        "Chrome": { 
-            sh "echo Chrome"
-        },
-      )
-    }
-   stage('Green Production'){
-        sh "echo Green Production"
-    }
-	stage("Merge Pull Request")
-		{
-			sh "echo Merge Pull Request"
-		}
-	stage("Merge to Master")
-	{
-		sh "echo Merge to Master"
-	}
-
+    
 }
